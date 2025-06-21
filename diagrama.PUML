@@ -1,0 +1,117 @@
+@startuml diagrama
+' Paquete principal del juego
+package ProyectoFinal {
+
+  ' Clases principales del juego
+  class Juego {
+    - ventana : sf::RenderWindow
+    - estado : EstadoJuego
+    - nivel : Nivel
+    - paleta : Paleta
+    - pelota : Pelota
+    - bloques : vector<Bloque>
+    - intentos : Intentos
+    - textos : Texto
+    - enPausa : bool
+    - musicaFondo : sf::Music
+    - musicaNivel : sf::Music[5]
+    - sonidoBloque : sf::Sound
+    - sonidoPaleta : sf::Sound
+    + main()
+  }
+
+  class Nivel {
+    - nivel : int
+    - maxNivel : int
+    + siguiente()
+    + reiniciar()
+    + get() : int
+    + esUltimo() : bool
+    + getMax() : int
+  }
+
+  class Paleta {
+    - sprite : sf::Sprite
+    - shape : sf::RectangleShape
+    + mover(float)
+  }
+
+  class Pelota {
+    - sprite : sf::Sprite
+    - shape : sf::CircleShape
+    - velocidad : sf::Vector2f
+    + mover()
+    + reboteHorizontal()
+    + reboteVertical()
+    + reset(int)
+  }
+
+  class Bloque {
+    - shape : sf::RectangleShape
+    - golpes : int
+    + recibirGolpe()
+    + destruido() : bool
+    + actualizarColor()
+  }
+
+  class Intentos {
+    - valor : int
+    - maximo : int
+    + reiniciar()
+    + perder()
+    + get() : int
+    + agotado() : bool
+  }
+
+  class Texto {
+    + presentacion : sf::Text
+    + pausa : sf::Text
+    + gameOver : sf::Text
+    + nivelGanado : sf::Text
+    + juegoGanado : sf::Text
+    + intentos : sf::Text
+    + nivel : sf::Text
+    + setIntentos(int)
+    + setNivel(int)
+  }
+
+  ' Relaciones
+  Juego --> Nivel
+  Juego --> Paleta
+  Juego --> Pelota
+  Juego --> "0..*" Bloque
+  Juego --> Intentos
+  Juego --> Texto
+
+  ' Recursos (como clases simples)
+  package assets {
+    class fondo_jpg
+    class paleta_png
+    class pelota_png
+    class nivel1_mp3
+    class nivel2_mp3
+    class nivel3_mp3
+    class nivel4_mp3
+    class nivel5_mp3
+    class Intro_Theme_mp3
+    class jump_03_wav
+    class jump_08_wav
+    class Ring_ttf
+  }
+
+  Juego ..> fondo_jpg
+  Juego ..> paleta_png
+  Juego ..> pelota_png
+  Juego ..> nivel1_mp3
+  Juego ..> nivel2_mp3
+  Juego ..> nivel3_mp3
+  Juego ..> nivel4_mp3
+  Juego ..> nivel5_mp3
+  Juego ..> Intro_Theme_mp3
+  Juego ..> jump_03_wav
+  Juego ..> jump_08_wav
+  Juego ..> Ring_ttf
+
+}
+
+@enduml
